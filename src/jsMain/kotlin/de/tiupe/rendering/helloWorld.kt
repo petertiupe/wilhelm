@@ -1,4 +1,4 @@
-package de.tiupe
+package de.tiupe.rendering
 
 import dev.fritz2.core.render
 
