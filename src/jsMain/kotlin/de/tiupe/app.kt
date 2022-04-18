@@ -4,4 +4,6 @@ fun main(){
     renderHelloWorld()
     renderSimplestComponent()
     renderComponentWithParameter()
+    renderComponentAllowingContent()
 }
+

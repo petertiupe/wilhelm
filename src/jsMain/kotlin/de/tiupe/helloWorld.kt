@@ -4,8 +4,8 @@ import dev.fritz2.core.render
 
 fun renderHelloWorld() {
     render(selector = "#helloWorld") {
-        h1 { +"Hallo Welt-Beispiel" }
-        div("some-fix-css-class") {
+        h1 { + "Hallo Welt-Beispiel" }
+        div {
             p(id = "someId") {
                 +"Hallo Welt!"
             }

@@ -8,7 +8,7 @@ data class PersonForComponent(val vorname: String, val nachname: String )
 fun RenderContext.personComponent(person: PersonForComponent) {
     p {
         + "Mein Vorname ist: ${person.vorname}"
-        br {  }
+        br {}
         + "Mein Nachname ist ${person.nachname}"
     }
 }
