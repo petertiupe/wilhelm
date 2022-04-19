@@ -3,6 +3,7 @@ package de.tiupe
 import de.tiupe.mountpoints.renderCombinedStores
 import de.tiupe.mountpoints.renderFlow
 import de.tiupe.mountpoints.renderFlowUsingInto
+import de.tiupe.mountpoints.renderListmounts
 import de.tiupe.rendering.renderComponentAllowingContent
 import de.tiupe.rendering.renderComponentWithParameter
 import de.tiupe.rendering.renderHelloWorld
@@ -16,5 +17,6 @@ fun main(){
     renderFlow()
     renderFlowUsingInto()
     renderCombinedStores()
+    renderListmounts()
 }
 
