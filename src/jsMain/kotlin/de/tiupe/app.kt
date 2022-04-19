@@ -1,9 +1,6 @@
 package de.tiupe
 
-import de.tiupe.handlers.renderConnectingHandlers
-import de.tiupe.handlers.renderEmittingHandlers
-import de.tiupe.handlers.renderSimpleHandler
-import de.tiupe.handlers.renderStoreWithHistory
+import de.tiupe.handlers.*
 import de.tiupe.mountpoints.renderCombinedStores
 import de.tiupe.mountpoints.renderFlow
 import de.tiupe.mountpoints.renderFlowUsingInto
@@ -26,5 +23,6 @@ fun main(){
     renderConnectingHandlers()
     renderEmittingHandlers()
     renderStoreWithHistory()
+    renderTracker()
 }
 
