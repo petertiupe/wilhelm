@@ -1,5 +1,6 @@
 package de.tiupe
 
+import de.tiupe.handlers.renderConnectingHandlers
 import de.tiupe.handlers.renderSimpleHandler
 import de.tiupe.mountpoints.renderCombinedStores
 import de.tiupe.mountpoints.renderFlow
@@ -20,5 +21,6 @@ fun main(){
     renderCombinedStores()
     renderListmounts()
     renderSimpleHandler()
+    renderConnectingHandlers()
 }
 
