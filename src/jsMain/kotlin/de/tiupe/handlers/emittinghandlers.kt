@@ -11,27 +11,35 @@ import dev.fritz2.core.*
  * mehreren Stores die Möglichkeit sich zu verbinden und muss nicht wissen,
  * welchen Handler man aufruft. Die Kontrolle bleibt komplett beim "Zielstore".
  *
- * Beide Stores in dem Beispiel sind vom Typ String.
+ * Dieser Code ist eine Kopie von den connectinghandlers, nur dass hier ein
+ * Event emitted wird.
  *
  * */
 
-object SaveStore : RootStore<String>("") {
+object SaveStoreReceiving : RootStore<String>("") {
+
     // Der Store ersetzt einfach die Daten im Store durch die im Handler ankommenden Daten
     val save = handle<String> { _, data ->
         data
     }
-}
 
-object InputStore : RootStore<String>("") {
-    // erst werden die Daten im SaveStore gesetzt, dann auch im InputStore.
-    val handleInput = handle<String> { _ , input ->
-        SaveStore.save(input) // call other store`s handler
-        input // do not forget to return the "next" store value!
+    // In der init-Funktion muss der Handler registriert werden, der auf das Event hört, ansonsten
+    // wird vom InputStoreEmitting nur "gesendet", aber niemand hört darauf.-
+    init {
+        InputStoreEmitting.handleAndEmitInput handledBy save
     }
 }
 
-fun renderConnectingHandlers() {
-    render("#connectinghandlers") {
+object InputStoreEmitting : RootStore<String>("") {
+    // erst werden die Daten im SaveStore gesetzt, dann auch im InputStore.
+    val handleAndEmitInput = handleAndEmit<String, String> {_, newModelValue ->
+        emit(newModelValue)
+        newModelValue
+    }
+}
+
+fun renderEmittingHandlers() {
+    render("#emittinghandlers") {
         val inputID = "petersEingabefeld"
         label {
             `for`(inputID)
@@ -40,10 +48,10 @@ fun renderConnectingHandlers() {
         input {
             width(40)
             height(30)
-            changes.values() handledBy InputStore.handleInput
+            changes.values() handledBy InputStoreEmitting.handleAndEmitInput
         }
         p {
-            InputStore.data.render(into = this) {
+            InputStoreEmitting.data.render(into = this) {
                 +"Im Input-Store steht "
                 span {
                     inlineStyle("color: green")
@@ -52,20 +60,16 @@ fun renderConnectingHandlers() {
             }
         }
         p {
-            SaveStore.data.render(into = this) {
+            SaveStoreReceiving.data.render(into = this) {
                 +"Im Save-Store steht "
                 span {
                     inlineStyle("color: blue")
                     +it
                 }
-
-
             }
         }
         p {
-            +"Der Save-Store wird vom Input-Store handler aus aufgerufen"
+            +"Der Save-Store empfängt das Event vom emitting Handler"
         }
-
-
     }
 }
