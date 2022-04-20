@@ -2,19 +2,12 @@ package de.tiupe.routing
 
 import dev.fritz2.core.render
 import dev.fritz2.routing.routerOf
-import kotlinx.coroutines.flow.forEach
 
 
 object Pages {
     const val home = "Home"
     const val page1 = "Page_1"
     const val page2 = "Page_2"
-}
-
-object Roles {
-    const val anonymous = "anonymous"
-    const val knownUser = "knownUser"
-    const val administrator = "administrator"
 }
 
 fun renderRouting() {
@@ -30,13 +23,23 @@ fun renderRouting() {
         // In dieses div schreibt der Router je nach Event...
         div(id = "routercontent") {
             // die Render-Funktion des Routers bekommt einen Key und die gesamte Map als Parameter
-            mapRouter.select("page").render { (pagekey, map) ->
+            // Page_1 und Page_2 zeigen unterschiedliche Möglichkeiten, wie man im Router an die Daten
+            // aus der Map kommt.
+            mapRouter.select("page").render { (pagekey, mp) ->
                 when (pagekey) {
                     Pages.home    -> div {
                         + "Es wurde auf die HOME-Seite geroutet"
                     }
                     Pages.page1   -> div {
                         + "Es wurde auf die Seite 1 geroutet"
+                        div{
+                            + "Folgende Einträge stehen in der Map des Routers:"
+                        }
+                        mp.forEach { (key, value) ->
+                            div {
+                                + "Key: $key       Value: $value"
+                            }
+                        }
                     }
                     Pages.page2   -> div {
                         // exemplarisches Nutzen der Map
