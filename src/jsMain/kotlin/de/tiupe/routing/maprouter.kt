@@ -2,6 +2,7 @@ package de.tiupe.routing
 
 import dev.fritz2.core.render
 import dev.fritz2.routing.routerOf
+import kotlinx.coroutines.flow.forEach
 
 
 object Pages {
@@ -38,7 +39,18 @@ fun renderRouting() {
                         + "Es wurde auf die Seite 1 geroutet"
                     }
                     Pages.page2   -> div {
+                        // exemplarisches Nutzen der Map
                         + "Es wurde auf die Seite 2 geroutet"
+                        div{
+                            + "Folgende Einträge stehen in der Map des Routers:"
+                        }
+                        mapRouter.data.render { map ->
+                            map.forEach { (key, value) ->
+                                div {
+                                    + "Key: $key       Value: $value"
+                                }
+                            }
+                        }
                     }
                     else -> div {
                         + "Die Seite konnte nicht gefunden werden"
