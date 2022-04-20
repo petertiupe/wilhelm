@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+
 package de.tiupe.validation
 import de.tiupe.model.Person
 import dev.fritz2.core.*
@@ -25,8 +25,7 @@ object PersonStore : ValidatingStore<Person, Unit, Message>(initialData = Person
      * Die beiden folgenden Handler dienen nur als Beispiel, falls man die Validierung in einem
      * Handler benötigt.
      * */
-
-    @Suppress("UNUSED_PROPERTY")
+    @Suppress("unused")
      val handlerWithValidation = handle {pers ->
 
         if(validate(pers).valid) {
@@ -36,6 +35,7 @@ object PersonStore : ValidatingStore<Person, Unit, Message>(initialData = Person
             Person("","", -1)
         }
     }
+    @Suppress("unused")
     val handlerWithValidationReset = handle { pers ->
         resetMessages() // empties the list of messages
         pers
