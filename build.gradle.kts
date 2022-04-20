@@ -4,6 +4,9 @@ plugins {
     kotlin("multiplatform") version "1.6.10"
     // Kotlin-Symbol-Processor-support KSP
     id("com.google.devtools.ksp") version "1.6.10-1.0.2"
+
+    // Kotlin-Serialization (not necessary for fritz2 but useful)
+    kotlin("plugin.serialization") version "1.6.10"
 }
 
 repositories {
@@ -28,6 +31,11 @@ kotlin {
             dependencies {
                 implementation("dev.fritz2:core:$fritz2Version")
                 // implementation("dev.fritz2:headless:$fritz2Version") // optional
+
+                // kotlinx-Serialization needs the plugin and this dependency
+                // versions of plugin and dependency are independent
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
             }
         }
         val jvmMain by getting {
