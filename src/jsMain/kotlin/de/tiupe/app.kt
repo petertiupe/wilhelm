@@ -9,6 +9,7 @@ import de.tiupe.rendering.renderComponentAllowingContent
 import de.tiupe.rendering.renderComponentWithParameter
 import de.tiupe.rendering.renderHelloWorld
 import de.tiupe.rendering.renderSimplestComponent
+import de.tiupe.validation.renderValidation
 
 fun main(){
     renderHelloWorld()
@@ -24,5 +25,6 @@ fun main(){
     renderEmittingHandlers()
     renderStoreWithHistory()
     renderTracker()
+    renderValidation()
 }
 
