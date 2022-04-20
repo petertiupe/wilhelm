@@ -1,13 +1,16 @@
+@file:Suppress("unused")
 package de.tiupe.validation
-
-import de.tiupe.handlers.InputStore
-import de.tiupe.handlers.InputStore.invoke
-import de.tiupe.handlers.SaveStore
 import de.tiupe.model.Person
 import dev.fritz2.core.*
 import dev.fritz2.validation.ValidatingStore
+import dev.fritz2.validation.valid
 
 // Durch das Erben von einer anderen Root-Klasse läuft die Validierung automatisch...
+
+/**
+ * Man kann die automatische Validierung bei jeder Modelländerung beim Anlegen des Stores ein- bzw.
+ * ausschalten. Ansonsten kann man die Steuerung der Validierung über die Metainformationen vornehmen.
+ * */
 object PersonStore : ValidatingStore<Person, Unit, Message>(initialData = Person("", "", -1), Person.validation) {
     val handleInputSurname = handle<String> { pers, input ->
         pers.copy(surname = input)
@@ -18,7 +21,27 @@ object PersonStore : ValidatingStore<Person, Unit, Message>(initialData = Person
     val handleInputAge = handle<String> { pers, input ->
         pers.copy(age = input.toInt())
     }
+    /**
+     * Die beiden folgenden Handler dienen nur als Beispiel, falls man die Validierung in einem
+     * Handler benötigt.
+     * */
+
+    @Suppress("UNUSED_PROPERTY")
+     val handlerWithValidation = handle {pers ->
+
+        if(validate(pers).valid) {
+            // send request to server...
+            pers
+        } else {
+            Person("","", -1)
+        }
+    }
+    val handlerWithValidationReset = handle { pers ->
+        resetMessages() // empties the list of messages
+        pers
+    }
 }
+
 
 
 
