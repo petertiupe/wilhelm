@@ -27,6 +27,8 @@ kotlin {
     js(IR) {
         browser {
             runTask {
+                // Die WEBPACK-Proxy-Dev-Server-Dokumentation findet man unter folgender URL
+                // https://webpack.js.org/configuration/dev-server/#devserverproxy
                 devServer = devServer?.copy(
                     port = 9000,
                     proxy = mutableMapOf(
