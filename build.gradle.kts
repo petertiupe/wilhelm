@@ -1,5 +1,7 @@
 @file:Suppress("UNUSED_VARIABLE")
 
+import kotlin.collections.mutableMapOf
+
 plugins {
     kotlin("multiplatform") version "1.6.10"
     // Kotlin-Symbol-Processor-support KSP
@@ -23,7 +25,44 @@ val fritz2Version = "1.0-SNAPSHOT"
 kotlin {
     jvm()
     js(IR) {
-        browser()
+        browser {
+            runTask {
+                devServer = devServer?.copy(
+                    port = 9000,
+                    proxy = mutableMapOf(
+                        "/germany" to mapOf(
+                            "target" to "https://api.corona-zahlen.org",
+                            // "secure" to false,
+                            //"changeOrigin" to true
+                            "logLevel" to "debug",
+                            "pathRewrite" to ( "^/germany" to "/germany" ),
+                            "secure" to false,
+                            "changeOrigin" to true,
+                        )
+                    )
+                )
+
+                /*
+                * target: "https://kons.sfa.oeffentliche.de",
+               secure: false,
+                changeOrigin: true,
+                agent: proxyAgent,
+                headers: {Cookie: cookie},
+                logLevel: 'debug'
+                * */
+                /*devServer = devServer?.copy(
+                    port = 9000,
+                    proxy = mutableMapOf(
+                        "/tiupe" to mapOf(
+                            // "target" to "https://api.corona-zahlen.org",
+                            "target" to "http://www.tiupe.de/index.html",
+                            // "pathRewrite" to ("^/tiupe" to ""),
+                            "secure" to false
+                        )
+                    )
+                ) */
+            }
+        }
     }.binaries.executable()
 
     sourceSets {
