@@ -32,6 +32,15 @@ kotlin {
                 devServer = devServer?.copy(
                     port = 9000,
                     proxy = mutableMapOf(
+                        "/repozugriff" to mapOf(
+                            "target" to "https://api.corona-zahlen.org",
+                            // "secure" to false,
+                            //"changeOrigin" to true
+                            "logLevel" to "debug",
+                            "pathRewrite" to ( "/repozugriff" to "/germany" ),
+                            "secure" to false,
+                            "changeOrigin" to true,
+                        ),
                         "/germany" to mapOf(
                             "target" to "https://api.corona-zahlen.org",
                             // "secure" to false,
@@ -40,7 +49,7 @@ kotlin {
                             "pathRewrite" to ( "^/germany" to "/germany" ),
                             "secure" to false,
                             "changeOrigin" to true,
-                        )
+                        ),
                     )
                 )
 

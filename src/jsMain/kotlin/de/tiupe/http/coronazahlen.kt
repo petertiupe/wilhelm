@@ -63,7 +63,7 @@ fun renderCoronazahlen() {
 
 
 // Store um Zugriff auf die suspending-Functions zu haben
-object RKIDatenStore : RootStore<RKIDatenRoot>(RKIDatenRoot(null)) {
+object RKIDatenStore : RootStore<RKIDatenRoot>(RKIDatenRoot("", null)) {
     val loadDataHandler = handle { rkiDatenRoot ->
         try {
             val response = usersApi.get("germany")
@@ -74,7 +74,7 @@ object RKIDatenStore : RootStore<RKIDatenRoot>(RKIDatenRoot(null)) {
                 // weiterarbeiten.
                 val jsonString = JSON.stringify(datenToSetResponse)
                 // manipulate JSON to make the resulting object simpler
-                val jsonStringNew = "{\"rKIDaten\": $jsonString }"
+                val jsonStringNew = "{\"id\":\"1\",\"rKIDaten\": $jsonString }"
                 val rkiDaten = Json.decodeFromString<RKIDatenRoot>(jsonStringNew)
                 rkiDaten
             } else {
