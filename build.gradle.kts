@@ -30,7 +30,7 @@ kotlin {
                 // Die WEBPACK-Proxy-Dev-Server-Dokumentation findet man unter folgender URL
                 // https://webpack.js.org/configuration/dev-server/#devserverproxy
                 devServer = devServer?.copy(
-                    port = 9000,
+                    port = 9001,
                     proxy = mutableMapOf(
                         "/repozugriff" to mapOf(
                             "target" to "https://api.corona-zahlen.org",
@@ -79,8 +79,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("dev.fritz2:core:$fritz2Version")
-                // implementation("dev.fritz2:headless:$fritz2Version") // optional
+
+                /** Nur eine der beiden fritz2-Komponenten muss aktiv sein */
+
+                // fritz2 ohne Headless-Komponenten
+                // implementation("dev.fritz2:core:$fritz2Version")
+
+                // fritz2 mit Headless-Komponenten
+                implementation("dev.fritz2:headless:$fritz2Version")
 
                 // kotlinx-Serialization needs the plugin and this dependency
                 // versions of plugin and dependency are independent
@@ -96,6 +102,17 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
+                // tailwind
+                implementation(npm("tailwindcss", "3.0.19"))
+                // implementation(npm("@tailwindcss/forms", "0.4.0")) // optional
+
+                // webpack
+                implementation(devNpm("postcss", "8.4.6"))
+                implementation(devNpm("postcss-loader", "6.2.1"))
+                implementation(devNpm("autoprefixer", "10.4.2"))
+                implementation(devNpm("css-loader", "6.6.0"))
+                implementation(devNpm("style-loader", "3.3.1"))
+                implementation(devNpm("cssnano", "5.0.17"))
             }
         }
     }

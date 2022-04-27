@@ -2,6 +2,7 @@ package de.tiupe
 
 import de.tiupe.handlers.*
 import de.tiupe.http.renderCoronazahlen
+import de.tiupe.minitypeahead.renderTypeAhead
 import de.tiupe.mountpoints.renderCombinedStores
 import de.tiupe.mountpoints.renderFlow
 import de.tiupe.mountpoints.renderFlowUsingInto
@@ -32,5 +33,6 @@ fun main(){
     renderRouting()
     renderCoronazahlen()
     renderRepository()
+    renderTypeAhead()
 }
 
